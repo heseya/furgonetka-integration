@@ -27,7 +27,9 @@ readonly class OrdersService implements OrdersServiceContract
             ->where('furgonetka_token', $token)
             ->firstOrFail();
 
-        $url = $dateTime ? "orders?limit=$limit&from=$dateTime" : "orders?limit=$limit";
+        // orders sort by created_at (the oldest first)
+        $url = "orders?limit=$limit&sort=created_at:desc";
+        $url .= $dateTime ? "&from=$dateTime" : '';
         $response = $this->apiService->get($api, $url);
 
         return $response->json('data');
