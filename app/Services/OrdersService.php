@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Api;
 use App\Services\Contracts\ApiServiceContract;
 use App\Services\Contracts\OrdersServiceContract;
+use Illuminate\Support\Collection;
 
 readonly final class OrdersService implements OrdersServiceContract
 {
@@ -15,10 +16,12 @@ readonly final class OrdersService implements OrdersServiceContract
     ) {
     }
 
-    public function getOrders(?string $token, ?string $dateTime, int $limit): array
+    public function getOrders(?string $token, ?string $dateTime, int $limit): Collection
     {
+        $orders = Collection::make();
+
         if (null === $token) {
-            return [];
+            return $orders;
         }
 
         /** @var Api $api */
@@ -27,7 +30,7 @@ readonly final class OrdersService implements OrdersServiceContract
             ->firstOrFail();
 
         $data = [];
-        if ($dateTime !== null) {
+        if (null !== $dateTime) {
             $data['from'] = $dateTime;
         }
 
@@ -37,6 +40,17 @@ readonly final class OrdersService implements OrdersServiceContract
             'sort' => 'created_at',
             'limit' => $limit,
         ]);
+
+        foreach ($response->json('data') as $order) {
+            $orders->push($this->getOrder($api, $order['id']));
+        }
+
+        return $orders;
+    }
+
+    public function getOrder(Api $api, string $orderId): array
+    {
+        $response = $this->apiService->send($api, 'GET', "/orders/id:$orderId");
 
         return $response->json('data');
     }

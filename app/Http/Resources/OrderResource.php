@@ -13,18 +13,19 @@ final class OrderResource extends JsonResource
         return [
             'sourceOrderId' => $this->resource['code'],
             'datetimeOrder' => $this->resource['created_at'],
-//            "sourceDatetimeChange" => "2021-05-26T08:47:06",
+            'sourceDatetimeChange' => $this->resource['created_at'],
 //            "service" => "dpd",
 //            "serviceDescription" => "Kurier DPD",
             'status' => $this->resource['status']['name'],
             'totalPrice' => $this->resource['summary'],
             'shippingCost' => $this->resource['shipping_price'],
             'totalPaid' => $this->resource['summary_paid'],
-//            "codAmount" => 4920.99,
+            'codAmount' => 0,
 //            "totalWeight" => 0,
 //            "point" => "PL11033",
             'comment' => $this->resource['comment'],
             'shippingAddress' => [
+                'company' => '',
                 'name' => $this->resource['delivery_address']['name'],
                 'street' => $this->resource['delivery_address']['address'],
                 'city' => $this->resource['delivery_address']['city'],
@@ -33,7 +34,7 @@ final class OrderResource extends JsonResource
                 'phone' => $this->resource['delivery_address']['phone'],
                 'email' => $this->resource['email'],
             ],
-//            "products" => ProductResource::collection($this->resource->products),
+            'products' => ProductResource::collection($this->resource['products']),
         ];
     }
 }

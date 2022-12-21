@@ -11,9 +11,9 @@ final class ProductResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'sourceProductId' => $this->resource->product->id,
-            'name' => $this->resource->name,
-            'priceGross' => $this->resource->price,
+            'sourceProductId' => $this->resource['product']['id'],
+            'name' => $this->resource['name'],
+            'priceGross' => $this->resource['price'],
 //            "priceNet" => 1000,
 //            "vat" => 23,
 //            "weight" => 2.5,
@@ -22,7 +22,7 @@ final class ProductResource extends JsonResource
 //            "height" => 30,
 //            "depth" => 50,
 //            "sku" => 234234234234,
-            'imageUrl' => $this->resource->product->cover->url,
+            'imageUrl' => $this->resource['product']['cover']['url'],
         ];
     }
 }

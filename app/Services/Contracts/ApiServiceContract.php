@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Contracts;
 
-use App\Exceptions\ApiAuthenticationException;
-use App\Exceptions\ApiAuthorizationException;
-use App\Exceptions\ApiClientErrorException;
-use App\Exceptions\ApiConnectionException;
-use App\Exceptions\ApiServerErrorException;
 use App\Models\Api;
 use Illuminate\Http\Client\Response;
 
