@@ -115,7 +115,7 @@ final class ApiService implements ApiServiceContract
      * @throws ApiConnectionException
      * @throws ApiServerErrorException
      */
-    private function send(
+    public function send(
         Api $api,
         string $method,
         string $url,

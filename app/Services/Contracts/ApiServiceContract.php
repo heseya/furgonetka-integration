@@ -14,13 +14,6 @@ use Illuminate\Http\Client\Response;
 
 interface ApiServiceContract
 {
-    /**
-     * @throws ApiServerErrorException
-     * @throws ApiConnectionException
-     * @throws ApiAuthenticationException
-     * @throws ApiAuthorizationException
-     * @throws ApiClientErrorException
-     */
     public function get(
         Api $api,
         string $url,
@@ -28,13 +21,6 @@ interface ApiServiceContract
         bool $tryRefreshing = true,
     ): Response;
 
-    /**
-     * @throws ApiServerErrorException
-     * @throws ApiConnectionException
-     * @throws ApiAuthenticationException
-     * @throws ApiAuthorizationException
-     * @throws ApiClientErrorException
-     */
     public function post(
         Api $api,
         string $url,
@@ -43,13 +29,6 @@ interface ApiServiceContract
         bool $tryRefreshing = true,
     ): Response;
 
-    /**
-     * @throws ApiServerErrorException
-     * @throws ApiConnectionException
-     * @throws ApiAuthenticationException
-     * @throws ApiAuthorizationException
-     * @throws ApiClientErrorException
-     */
     public function patch(
         Api $api,
         string $url,
@@ -58,18 +37,21 @@ interface ApiServiceContract
         bool $tryRefreshing = true,
     ): Response;
 
-    /**
-     * @throws ApiServerErrorException
-     * @throws ApiConnectionException
-     * @throws ApiAuthenticationException
-     * @throws ApiAuthorizationException
-     * @throws ApiClientErrorException
-     */
     public function delete(
         Api $api,
         string $url,
         array $data,
         array $headers = [],
         bool $tryRefreshing = true,
+    ): Response;
+
+    public function send(
+        Api $api,
+        string $method,
+        string $url,
+        ?array $data = [],
+        array $headers = [],
+        bool $tryRefreshing = true,
+        bool $withToken = true,
     ): Response;
 }
