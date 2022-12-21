@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\Api;
@@ -14,7 +16,9 @@ class ProductsTest extends TestCase
     use RefreshDatabase;
 
     private Api $api;
+
     private StoreUser $user;
+
     private string $expectedFileContent;
 
     protected function setUp(): void
@@ -84,7 +88,7 @@ class ProductsTest extends TestCase
 //            ->actingAs($this->user)
 //            ->json('GET', $report, ['api' => $this->api->url, 'format' => 'csv']);
 //
-////        dd($response->json());
+// //        dd($response->json());
 //
 //        $response->assertStatus(200);
 //        $response->assertDownload($this->api->getKey() . "-{$report}.csv");
@@ -104,7 +108,7 @@ class ProductsTest extends TestCase
     /**
      * @dataProvider productHiddenProvider
      */
-    public function testApiMissing($report, $param)
+    public function testApiMissing($report, $param): void
     {
         $this->actingAs($this->user)->get("/{$report}?api=https://missing.com&format=csv")
             ->assertStatus(404);
@@ -127,7 +131,7 @@ class ProductsTest extends TestCase
     /**
      * @dataProvider productHiddenProvider
      */
-    public function testApiInvalidFormat($report, $param)
+    public function testApiInvalidFormat($report, $param): void
     {
         $this->actingAs($this->user)->get("/{$report}?api={$this->api->url}&format=png")
             ->assertStatus(422);
@@ -195,13 +199,15 @@ class ProductsTest extends TestCase
 //        );
 //    }
 
-    private function setApiProductsUrl() {
+    private function setApiProductsUrl(): void
+    {
         $this->api->settings()->create([
-            'store_front_url' => "http://store.com/products/",
+            'store_front_url' => 'http://store.com/products/',
         ]);
     }
 
-    private function mockApiShipping() {
+    private function mockApiShipping(): void
+    {
         Http::fake([
             "{$this->api->url}/shipping-methods" => Http::response([
                 'data' => [
@@ -217,7 +223,8 @@ class ProductsTest extends TestCase
         ]);
     }
 
-    private function mockApiNoProducts($param) {
+    private function mockApiNoProducts($param): void
+    {
         Http::fake([
             "{$this->api->url}/products?full&limit=250&page=1{$param}" => Http::response([
                 'data' => [],
@@ -231,7 +238,8 @@ class ProductsTest extends TestCase
         ]);
     }
 
-    private function mockApiProducts($param) {
+    private function mockApiProducts($param): void
+    {
         Http::fake([
             "{$this->api->url}/products?full&limit=250&page=1{$param}" => Http::response([
                 'data' => [

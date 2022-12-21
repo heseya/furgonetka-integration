@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Services\Contracts;
+declare(strict_types=1);
 
-use App\Dtos\OrdersExportDto;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+namespace App\Services\Contracts;
 
 interface OrdersServiceContract
 {
-    public function exportOrders(OrdersExportDto $dto): BinaryFileResponse;
+    public function getOrders();
 }

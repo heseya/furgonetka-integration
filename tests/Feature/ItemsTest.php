@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\Api;
@@ -14,6 +16,7 @@ class ItemsTest extends TestCase
     use RefreshDatabase;
 
     private Api $api;
+
     private StoreUser $user;
 
     protected function setUp(): void

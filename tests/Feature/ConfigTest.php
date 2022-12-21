@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\Api;
@@ -14,7 +16,9 @@ class ConfigTest extends TestCase
     use RefreshDatabase;
 
     private Api $api;
+
     private StoreUser $user;
+
     private array $excepted;
 
     protected function setUp(): void

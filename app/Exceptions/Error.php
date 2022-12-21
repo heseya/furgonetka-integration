@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 final class Error
@@ -15,7 +17,7 @@ final class Error
     public string $message;
 
     /**
-     * Errors details
+     * Errors details.
      */
     public array $errors;
 

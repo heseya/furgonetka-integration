@@ -1,15 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
-use App\Dtos\OrdersExportDto;
-use App\Exports\OrdersExport;
-use App\Models\Api;
 use App\Services\Contracts\ApiServiceContract;
 use App\Services\Contracts\OrdersServiceContract;
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class OrdersService implements OrdersServiceContract
 {
@@ -18,17 +14,8 @@ class OrdersService implements OrdersServiceContract
     ) {
     }
 
-    public function exportOrders(OrdersExportDto $dto): BinaryFileResponse
+    public function getOrders()
     {
-        $api = Api::where('url', $dto->getApi())->firstOrFail();
-
-        $orders = $this->getOrders($api, $dto->getParamsToUrl());
-
-        return Excel::download(new OrdersExport($orders), 'orders.' . $dto->getFormat());
-    }
-
-    private function getOrders(Api $api, string $params): Collection
-    {
-        return $this->apiService->getAll($api, 'orders', $params);
+        return []; // $this->apiService->getAll($api, 'orders', $params);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\Api;
@@ -94,9 +96,9 @@ class ConfigService implements ConfigServiceContract
     private function generateField(string $report, string $format, string|null $api_url): array
     {
         $result = [
-            'key' => $report . '_' . $format .'_url',
-            'label' => Str::upper($format) . ' formatted ' . $report,
-            'placeholder' => Config::get('app.url') . '/' . $report .'?api=api_url',
+            'key' => $report.'_'.$format.'_url',
+            'label' => Str::upper($format).' formatted '.$report,
+            'placeholder' => Config::get('app.url').'/'.$report.'?api=api_url',
             'type' => 'text',
             'default_value' => null,
             'required' => false,
@@ -107,7 +109,7 @@ class ConfigService implements ConfigServiceContract
             $result = Arr::add(
                 $result,
                 'value',
-                Config::get('app.url') . '/' . $report . '?api=' . $api_url . '&format=' . $format
+                Config::get('app.url').'/'.$report.'?api='.$api_url.'&format='.$format
             );
         }
 

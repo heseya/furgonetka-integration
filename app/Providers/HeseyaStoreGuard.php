@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Exceptions\ApiClientErrorException;
@@ -18,7 +20,9 @@ use Throwable;
 class HeseyaStoreGuard implements Guard
 {
     private ?Authenticatable $user = null;
+
     private ?string $token = null;
+
     private ?string $apiUrl = null;
 
     public function __construct(
@@ -34,7 +38,7 @@ class HeseyaStoreGuard implements Guard
 
     public function check(): bool
     {
-        return $this->user !== null;
+        return null !== $this->user;
     }
 
     public function guest(): bool
@@ -68,12 +72,12 @@ class HeseyaStoreGuard implements Guard
         $apiUrl = $this->request->get('api');
         $token = $this->getToken();
 
-        if ($apiUrl !== null && ($headerApiUrl !== null && $headerApiUrl !== $apiUrl)) {
+        if (null !== $apiUrl && (null !== $headerApiUrl && $headerApiUrl !== $apiUrl)) {
             return null;
         }
         $apiUrl = $apiUrl ?? $headerApiUrl;
 
-        if (($apiUrl === $this->apiUrl && $token === $this->token) || ($token !== null && $headerApiUrl === null)) {
+        if (($apiUrl === $this->apiUrl && $token === $this->token) || (null !== $token && null === $headerApiUrl)) {
             return null;
         }
 
@@ -86,7 +90,7 @@ class HeseyaStoreGuard implements Guard
         }
 
         $payload = $this->getTokenPayload();
-        if ($payload !== null && rtrim($apiUrl, '/') !== rtrim($payload['iss'], '/')) {
+        if (null !== $payload && rtrim($apiUrl, '/') !== rtrim($payload['iss'], '/')) {
             throw new InvalidTokenException("Token doesn't match the X-Core-Url API");
         }
 
@@ -110,17 +114,22 @@ class HeseyaStoreGuard implements Guard
     {
         $token = $this->getToken();
 
-        if ($token === null) {
+        if (null === $token) {
             return null;
         }
 
         $payloadEncoded = Str::between($token, '.', '.');
 
-        return json_decode(base64_decode($payloadEncoded), true);
+        return json_decode(base64_decode($payloadEncoded, true), true);
     }
 
     private function getToken(): ?string
     {
         return $this->request->bearerToken();
+    }
+
+    public function hasUser(): bool
+    {
+        return null !== $this->user;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InstallRequest;
@@ -7,11 +9,11 @@ use App\Models\Api;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Throwable;
-use Illuminate\Support\Facades\Config;
 
 class InstallationController extends Controller
 {
@@ -29,7 +31,7 @@ class InstallationController extends Controller
         $token = $request->input('integration_token');
 
         try {
-            $response = Http::withToken($token)->get("${storeUrl}/auth/profile");
+            $response = Http::withToken($token)->get("{$storeUrl}/auth/profile");
         } catch (Throwable) {
             throw new Exception('Failed to connect to the API');
         }
@@ -38,7 +40,7 @@ class InstallationController extends Controller
             throw new Exception('Failed to verify assigned permissions');
         }
 
-        if ($response->json('data.url') === null) {
+        if (null === $response->json('data.url')) {
             throw new Exception('Integration token validation failed');
         }
 

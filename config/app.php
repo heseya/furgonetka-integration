@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Str;
 
 $appUrl = env('APP_URL', 'http://localhost');
@@ -8,7 +10,6 @@ $appUrl = Str::endsWith($appUrl, '/')
     : $appUrl;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -103,7 +104,6 @@ return [
     */
 
     'providers' => [
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -121,6 +121,7 @@ return [
         Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -128,7 +129,5 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
     ],
-
 ];

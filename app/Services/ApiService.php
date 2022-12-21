@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Exceptions\ApiAuthenticationException;
@@ -38,9 +40,9 @@ class ApiService implements ApiServiceContract
         $collection = Collection::make([]);
 
         $lastPage = 1; // Get at least once
-        for ($page = 1; $page <= $lastPage; $page++) {
-            $fullUrl = "/${url}?limit=200&page=${page}${params}";
-            Log::info('Getting ' . $api->url . '/' . $fullUrl);
+        for ($page = 1; $page <= $lastPage; ++$page) {
+            $fullUrl = "/{$url}?limit=200&page={$page}{$params}";
+            Log::info('Getting '.$api->url.'/'.$fullUrl);
 
             $response = $this->get($api, $fullUrl);
             $collection = $collection->concat($response->json('data'));
@@ -155,7 +157,7 @@ class ApiService implements ApiServiceContract
                 $request = $request->withToken($api->integration_token);
             }
 
-            $fullUrl = rtrim($api->url . $url, '/');
+            $fullUrl = rtrim($api->url.$url, '/');
 
             $response = match ($method) {
                 'post' => $request->post($fullUrl, $data),
@@ -172,15 +174,15 @@ class ApiService implements ApiServiceContract
                 throw new ApiServerErrorException('API responded with an Error');
             }
 
-            if ($response->status() === 403) {
+            if (403 === $response->status()) {
                 throw new ApiAuthorizationException('This action is unauthorized by API');
             }
 
-            if ($response->status() !== 401) {
+            if (401 !== $response->status()) {
                 throw new ApiClientErrorException('API responded with an Error');
             }
 
-            if ($tryRefreshing === false) {
+            if (false === $tryRefreshing) {
                 throw new ApiAuthenticationException('Integration token was rejected by API');
             }
 

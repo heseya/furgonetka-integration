@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use DateTimeInterface;
 use Illuminate\Support\Carbon;
 
+/**
+ * @mixin IdeHelperModel
+ */
 class Model extends \Illuminate\Database\Eloquent\Model
 {
     // format for database

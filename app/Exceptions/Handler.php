@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use App\Http\Resources\ErrorResource;
@@ -97,7 +99,7 @@ class Handler extends ExceptionHandler
                 app('sentry')->captureException($exception);
             }
 
-            if (config('app.debug') === true) {
+            if (true === config('app.debug')) {
                 return parent::render($request, $exception);
             }
 
