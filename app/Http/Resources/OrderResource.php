@@ -16,7 +16,7 @@ final class OrderResource extends JsonResource
 //            "sourceDatetimeChange" => "2021-05-26T08:47:06",
 //            "service" => "dpd",
 //            "serviceDescription" => "Kurier DPD",
-            "status" => $this->resource->status['name'],
+            "status" => $this->resource['status']['name'],
             "totalPrice" => $this->resource['summary'],
             "shippingCost" => $this->resource['shipping_price'],
             "totalPaid" => $this->resource['summary_paid'],
