@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\Api;
 use App\Services\Contracts\InstallationServiceContract;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -36,7 +37,7 @@ class InstallationService implements InstallationServiceContract
         }
 
         $permissions = $response->json('data.permissions');
-        $requiredPermissions = Config::get('permissions.required');
+        $requiredPermissions = Collection::make(Config::get('permissions.required'));
 
         if ($requiredPermissions->diff($permissions)->isNotEmpty()) {
             throw new \Exception('App doesn\'t have all required permissions');
