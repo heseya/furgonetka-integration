@@ -13,7 +13,6 @@ use App\Models\Api;
 use App\Services\Contracts\ApiServiceContract;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
-use Throwable;
 
 final class ApiService implements ApiServiceContract
 {
@@ -125,20 +124,20 @@ final class ApiService implements ApiServiceContract
         bool $tryRefreshing = true,
         bool $withToken = true,
     ): Response {
-            $request = Http::acceptJson()->asJson()->withHeaders($headers);
+        $request = Http::acceptJson()->asJson()->withHeaders($headers);
 
-            if ($withToken) {
-                $request = $request->withToken($api->integration_token);
-            }
+        if ($withToken) {
+            $request = $request->withToken($api->integration_token);
+        }
 
-            $fullUrl = rtrim($api->url.$url, '/');
+        $fullUrl = rtrim($api->url.$url, '/');
 
-            $response = match ($method) {
-                'post' => $request->post($fullUrl, $data),
-                'patch' => $request->patch($fullUrl, $data),
-                'delete' => $request->delete($fullUrl, $data),
-                default => $request->get($fullUrl, $data),
-            };
+        $response = match ($method) {
+            'post' => $request->post($fullUrl, $data),
+            'patch' => $request->patch($fullUrl, $data),
+            'delete' => $request->delete($fullUrl, $data),
+            default => $request->get($fullUrl, $data),
+        };
 
         if ($response->failed()) {
             if ($response->serverError()) {

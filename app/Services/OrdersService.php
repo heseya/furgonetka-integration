@@ -17,7 +17,7 @@ readonly final class OrdersService implements OrdersServiceContract
 
     public function getOrders(?string $token, ?string $dateTime, int $limit): array
     {
-        if ($token === null) {
+        if (null === $token) {
             return [];
         }
 
