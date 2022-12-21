@@ -9,21 +9,26 @@ use App\Services\Contracts\ApiServiceContract;
 use App\Services\Contracts\OrdersServiceContract;
 use Illuminate\Support\Collection;
 
-class OrdersService implements OrdersServiceContract
+readonly class OrdersService implements OrdersServiceContract
 {
     public function __construct(
         private ApiServiceContract $apiService,
     ) {
     }
 
-    public function getOrders(string $token, string $dateTime, int $limit): Collection
+    public function getOrders(?string $token, ?string $dateTime, int $limit): Collection
     {
+        if ($token === null) {
+            return Collection::make();
+        }
+
         /** @var Api $api */
         $api = Api::query()
             ->where('furgonetka_token', $token)
             ->firstOrFail();
 
-        $response = $this->apiService->get($api, "orders?from=$dateTime&limit=$limit");
+        $url = $dateTime ? "orders?limit=$limit&from=$dateTime" : "orders?limit=$limit";
+        $response = $this->apiService->get($api, $url);
 
         return $response->json('data');
     }
