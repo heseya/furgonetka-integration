@@ -9,4 +9,11 @@ return [
         'orders.show_details',
         'orders.edit',
     ],
+
+    'internal' => [
+        'configure' => [
+            'name' => 'configure',
+            'display_name' => 'Możliwość zmiany ustawień integracji z Furgonetka.pl',
+        ],
+    ],
 ];

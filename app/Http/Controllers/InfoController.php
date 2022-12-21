@@ -23,7 +23,7 @@ class InfoController extends Controller
             'icon' => URL::to('logo.png'),
             'licence_required' => false,
             'required_permissions' => Config::get('permissions.required'),
-            'internal_permissions' => [],
+            'internal_permissions' => Config::get('permissions.internal'),
         ]);
     }
 }
