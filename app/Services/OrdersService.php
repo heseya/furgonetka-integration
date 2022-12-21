@@ -34,7 +34,7 @@ readonly final class OrdersService implements OrdersServiceContract
         // orders sort by created_at (the oldest first)
         $response = $this->apiService->send($api, 'GET', '/orders', [
             ...$data,
-            'sort' => 'created_at:desc',
+            'sort' => 'created_at',
             'limit' => $limit,
         ]);
 
