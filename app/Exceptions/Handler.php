@@ -83,23 +83,23 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      */
-    public function render($request, \Throwable $exception): Response
+    public function render($request, \Throwable $e): Response
     {
-        $class = $exception::class;
+        $class = $e::class;
 
         if (array_key_exists($class, self::ERRORS)) {
             $error = new Error(
-                self::ERRORS[$class]['message'] ?? $exception->getMessage(),
+                self::ERRORS[$class]['message'] ?? $e->getMessage(),
                 self::ERRORS[$class]['code'] ?? 500,
-                method_exists($exception, 'errors') ? $exception->errors() : [],
+                method_exists($e, 'errors') ? $e->errors() : [],
             );
         } else {
             if (app()->bound('sentry')) {
-                app('sentry')->captureException($exception);
+                app('sentry')->captureException($e);
             }
 
             if (true === config('app.debug')) {
-                return parent::render($request, $exception);
+                return parent::render($request, $e);
             }
 
             $error = new Error();

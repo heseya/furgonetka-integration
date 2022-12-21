@@ -3,8 +3,9 @@
     "type": "project",
     "require": {
         "php": "^8.2",
-        "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^9"
+        "guzzlehttp/guzzle": "^7.5",
+        "laravel/framework": "^9",
+        "sentry/sentry-laravel": "^3.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
