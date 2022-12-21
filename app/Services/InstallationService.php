@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Throwable;
 
-class InstallationService implements InstallationServiceContract
+final class InstallationService implements InstallationServiceContract
 {
     public function install(
         string $storeUrl,

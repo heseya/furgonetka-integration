@@ -7,19 +7,18 @@ namespace App\Services;
 use App\Models\Api;
 use App\Services\Contracts\ApiServiceContract;
 use App\Services\Contracts\OrdersServiceContract;
-use Illuminate\Support\Collection;
 
-readonly class OrdersService implements OrdersServiceContract
+readonly final class OrdersService implements OrdersServiceContract
 {
     public function __construct(
         private ApiServiceContract $apiService,
     ) {
     }
 
-    public function getOrders(?string $token, ?string $dateTime, int $limit): Collection
+    public function getOrders(?string $token, ?string $dateTime, int $limit): array
     {
         if ($token === null) {
-            return Collection::make();
+            return [];
         }
 
         /** @var Api $api */
@@ -28,7 +27,7 @@ readonly class OrdersService implements OrdersServiceContract
             ->firstOrFail();
 
         // orders sort by created_at (the oldest first)
-        $url = "orders?limit=$limit&sort=created_at:desc";
+        $url = "/orders?limit=$limit&sort=created_at:desc";
         $url .= $dateTime ? "&from=$dateTime" : '';
         $response = $this->apiService->get($api, $url);
 

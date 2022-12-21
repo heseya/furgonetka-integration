@@ -9,7 +9,7 @@ use App\Services\Contracts\ConfigServiceContract;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 
-class ConfigService implements ConfigServiceContract
+final class ConfigService implements ConfigServiceContract
 {
     public function getConfigs(Api $api): array
     {

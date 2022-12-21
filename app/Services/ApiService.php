@@ -15,7 +15,7 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Throwable;
 
-class ApiService implements ApiServiceContract
+final class ApiService implements ApiServiceContract
 {
     /**
      * @throws ApiAuthenticationException
@@ -125,7 +125,6 @@ class ApiService implements ApiServiceContract
         bool $tryRefreshing = true,
         bool $withToken = true,
     ): Response {
-        try {
             $request = Http::acceptJson()->asJson()->withHeaders($headers);
 
             if ($withToken) {
@@ -140,9 +139,6 @@ class ApiService implements ApiServiceContract
                 'delete' => $request->delete($fullUrl, $data),
                 default => $request->get($fullUrl, $data),
             };
-        } catch (Throwable) {
-            throw new ApiConnectionException('Cannot reach the API');
-        }
 
         if ($response->failed()) {
             if ($response->serverError()) {
