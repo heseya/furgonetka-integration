@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Api;
 use App\Services\Contracts\ApiServiceContract;
 use App\Services\Contracts\OrdersServiceContract;
+use Illuminate\Support\Collection;
 
 class OrdersService implements OrdersServiceContract
 {
@@ -14,8 +16,15 @@ class OrdersService implements OrdersServiceContract
     ) {
     }
 
-    public function getOrders()
+    public function getOrders(string $token, string $dateTime, int $limit): Collection
     {
-        return []; // $this->apiService->getAll($api, 'orders', $params);
+        /** @var Api $api */
+        $api = Api::query()
+            ->where('furgonetka_token', $token)
+            ->firstOrFail();
+
+        $response = $this->apiService->get($api->url, "orders?from=$dateTime&limit=$limit");
+
+        return $response->json('data');
     }
 }

@@ -11,7 +11,6 @@ use App\Exceptions\ApiConnectionException;
 use App\Exceptions\ApiServerErrorException;
 use App\Models\Api;
 use Illuminate\Http\Client\Response;
-use Illuminate\Support\Collection;
 
 interface ApiServiceContract
 {
@@ -28,8 +27,6 @@ interface ApiServiceContract
         array $headers,
         bool $tryRefreshing,
     ): Response;
-
-    public function getAll(Api $api, string $url, string $params, bool $with_currency): Collection;
 
     /**
      * @throws ApiServerErrorException

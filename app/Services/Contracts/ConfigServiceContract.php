@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Contracts;
 
-use Illuminate\Support\Collection;
+use App\Models\Api;
 
 interface ConfigServiceContract
 {
-    public function getConfigs(bool $with_values, string|null $api_url): Collection;
+    public function getConfigs(Api $api): array;
 }

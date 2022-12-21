@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrdersExportRequest;
 use App\Services\Contracts\OrdersServiceContract;
+use Illuminate\Support\Facades\Response;
 
 class OrdersController extends Controller
 {
@@ -16,6 +17,10 @@ class OrdersController extends Controller
 
     public function show(OrdersExportRequest $request)
     {
-        return $this->ordersService->getOrders();
+        return Response::json($this->ordersService->getOrders(
+            $request->input('token'),
+            $request->input('datetime'),
+            $request->input('limit', 30),
+        ));
     }
 }

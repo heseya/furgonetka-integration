@@ -20,6 +20,7 @@ return new class() extends Migration {
             $table->string('refresh_token');
             $table->string('uninstall_token')->unique();
             $table->string('auth_token');
+            $table->string('furgonetka_token')->unique();
 
             $table->timestamps();
         });

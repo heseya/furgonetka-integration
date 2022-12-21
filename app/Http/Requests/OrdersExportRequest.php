@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-class OrdersExportRequest extends ExportRequest
+use Illuminate\Http\Request;
+
+class OrdersExportRequest extends Request
 {
+    public function rules(): array
+    {
+        return [
+            'datetime' => ['nullable'],
+            'limit' => ['nullable', 'number'],
+        ];
+    }
 }
