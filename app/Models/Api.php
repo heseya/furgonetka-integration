@@ -20,5 +20,6 @@ class Api extends Model
         'refresh_token',
         'uninstall_token',
         'auth_token',
+        'furgonetka_token',
     ];
 }

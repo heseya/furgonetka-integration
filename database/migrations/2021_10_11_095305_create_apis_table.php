@@ -16,11 +16,11 @@ return new class() extends Migration {
             $table->uuid('id')->primary();
             $table->string('url')->unique();
             $table->string('version');
-            $table->string('integration_token');
+            $table->string('integration_token', 1000);
             $table->string('refresh_token');
             $table->string('uninstall_token')->unique();
-            $table->string('auth_token');
-            $table->string('furgonetka_token')->unique();
+            $table->string('auth_token', 64);
+            $table->string('furgonetka_token', 32)->unique();
 
             $table->timestamps();
         });
