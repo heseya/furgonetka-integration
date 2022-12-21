@@ -24,8 +24,8 @@ interface ApiServiceContract
     public function get(
         Api $api,
         string $url,
-        array $headers,
-        bool $tryRefreshing,
+        array $headers = [],
+        bool $tryRefreshing = true,
     ): Response;
 
     /**
@@ -39,8 +39,8 @@ interface ApiServiceContract
         Api $api,
         string $url,
         array $data,
-        array $headers,
-        bool $tryRefreshing,
+        array $headers = [],
+        bool $tryRefreshing = true,
     ): Response;
 
     /**
@@ -54,8 +54,8 @@ interface ApiServiceContract
         Api $api,
         string $url,
         array $data,
-        array $headers,
-        bool $tryRefreshing,
+        array $headers = [],
+        bool $tryRefreshing = true,
     ): Response;
 
     /**
@@ -69,7 +69,7 @@ interface ApiServiceContract
         Api $api,
         string $url,
         array $data,
-        array $headers,
-        bool $tryRefreshing,
+        array $headers = [],
+        bool $tryRefreshing = true,
     ): Response;
 }

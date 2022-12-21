@@ -18,7 +18,7 @@ class OrdersController extends Controller
     public function show(OrdersExportRequest $request)
     {
         return Response::json($this->ordersService->getOrders(
-            $request->input('token'),
+            $request->header('Authorization'),
             $request->input('datetime'),
             $request->input('limit', 30),
         ));

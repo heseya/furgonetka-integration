@@ -23,7 +23,7 @@ class OrdersService implements OrdersServiceContract
             ->where('furgonetka_token', $token)
             ->firstOrFail();
 
-        $response = $this->apiService->get($api->url, "orders?from=$dateTime&limit=$limit");
+        $response = $this->apiService->get($api, "orders?from=$dateTime&limit=$limit");
 
         return $response->json('data');
     }
