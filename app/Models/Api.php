@@ -15,9 +15,7 @@ class Api extends Model
 
     protected $fillable = [
         'url',
-        'name',
         'version',
-        'licence_key',
         'integration_token',
         'refresh_token',
         'uninstall_token',

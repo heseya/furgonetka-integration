@@ -8,7 +8,9 @@ use App\Services\ApiService;
 use App\Services\ConfigService;
 use App\Services\Contracts\ApiServiceContract;
 use App\Services\Contracts\ConfigServiceContract;
+use App\Services\Contracts\InstallationServiceContract;
 use App\Services\Contracts\OrdersServiceContract;
+use App\Services\InstallationService;
 use App\Services\OrdersService;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
         ApiServiceContract::class => ApiService::class,
         ConfigServiceContract::class => ConfigService::class,
         OrdersServiceContract::class => OrdersService::class,
+        InstallationServiceContract::class => InstallationService::class,
     ];
 
     /**

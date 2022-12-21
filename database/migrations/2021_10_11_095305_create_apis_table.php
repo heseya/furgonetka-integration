@@ -6,8 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApisTable extends Migration
-{
+return new class() extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,7 +15,6 @@ class CreateApisTable extends Migration
         Schema::create('apis', function (Blueprint $table): void {
             $table->uuid('id')->primary();
             $table->string('url')->unique();
-            $table->string('name')->nullable();
             $table->string('version');
             $table->string('integration_token');
             $table->string('refresh_token');
@@ -34,4 +32,4 @@ class CreateApisTable extends Migration
     {
         Schema::dropIfExists('apis');
     }
-}
+};
