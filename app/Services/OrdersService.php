@@ -23,17 +23,16 @@ readonly final class OrdersService implements OrdersServiceContract
         $orders = Collection::make();
         $api = $this->getApiByToken($token);
 
-        $data = [];
+        $data = [
+            'limit' => $limit,
+        ];
+
         if (null !== $dateTime) {
             $data['to'] = Str::of($dateTime)->beforeLast(' ');
         }
 
         // orders sort by created_at (the oldest first)
-        $response = $this->apiService->send($api, 'GET', '/orders', [
-            ...$data,
-            'sort' => 'created_at:DESC',
-            'limit' => $limit,
-        ]);
+        $response = $this->apiService->send($api, 'GET', '/orders', $data);
 
         foreach ($response->json('data') as $order) {
             $orders->push($this->getOrder($api, $order['id']));
