@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
         InstallationServiceContract::class => InstallationService::class,
     ];
 
-    public function boot()
+    public function boot(): void
     {
         OrderResource::withoutWrapping();
         ProductResource::withoutWrapping();

@@ -8,7 +8,6 @@ use App\Exceptions\InvalidTokenException;
 use App\Models\Api;
 use App\Services\Contracts\ApiServiceContract;
 use App\Services\Contracts\OrdersServiceContract;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -24,13 +23,16 @@ readonly final class OrdersService implements OrdersServiceContract
         $orders = Collection::make();
         $api = $this->getApiByToken($token);
 
+        $data = [];
+        if (null !== $dateTime) {
+            $data['to'] = Str::of($dateTime)->beforeLast(' ');
+        }
+
         // orders sort by created_at (the oldest first)
         $response = $this->apiService->send($api, 'GET', '/orders', [
-            'sort' => 'created_at',
+            ...$data,
+            'sort' => 'created_at:DESC',
             'limit' => $limit,
-            'from' => null !== $dateTime ?
-                Str::of($dateTime)->beforeLast(' ') :
-                Carbon::today()->subDays(100)->startOfDay()->toDateString(),
         ]);
 
         foreach ($response->json('data') as $order) {
@@ -43,6 +45,8 @@ readonly final class OrdersService implements OrdersServiceContract
     public function saveTracking(?string $token, string $orderId, string $number): void
     {
         $api = $this->getApiByToken($token);
+        $orderId = $this->apiService->send($api, 'GET', "/orders/$orderId")->json('data.id');
+
         $this->apiService->send($api, 'PATCH', "/orders/id:$orderId", [
             'shipping_number' => $number,
         ]);

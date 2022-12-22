@@ -11,8 +11,8 @@ final class OrderResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'sourceOrderId' => $this->resource['id'],
-            'sourceClientId' => $this->resource['code'],
+            'sourceOrderId' => $this->resource['code'],
+            'sourceClientId' => null,
             'datetimeOrder' => $this->resource['created_at'],
             'sourceDatetimeChange' => $this->resource['created_at'],
             'service' => null,
