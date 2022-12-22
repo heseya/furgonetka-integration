@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Http\Resources\OrderResource;
+use App\Http\Resources\ProductResource;
 use App\Services\ApiService;
 use App\Services\ConfigService;
 use App\Services\Contracts\ApiServiceContract;
@@ -22,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
         OrdersServiceContract::class => OrdersService::class,
         InstallationServiceContract::class => InstallationService::class,
     ];
+
+    public function boot()
+    {
+        OrderResource::withoutWrapping();
+        ProductResource::withoutWrapping();
+    }
 
     /**
      * Register any application services.
