@@ -9,6 +9,7 @@ use App\Services\Contracts\InstallationServiceContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class InstallationController extends Controller
 {
@@ -33,6 +34,6 @@ class InstallationController extends Controller
     {
         $this->installationService->uninstall($request->input('uninstall_token'));
 
-        return Response::json(null, JsonResponse::HTTP_NO_CONTENT);
+        return Response::json(null, ResponseAlias::HTTP_NO_CONTENT);
     }
 }

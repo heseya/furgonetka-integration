@@ -12,16 +12,18 @@ final class ProductResource extends JsonResource
     {
         return [
             'sourceProductId' => $this->resource['product']['id'],
-            'name' => $this->resource['name'],
+            'name' => '' !== $this->resource['name'] ? $this->resource['name'] : $this->resource['product']['name'],
             'priceGross' => $this->resource['price'],
-//            "priceNet" => 1000,
-//            "vat" => 23,
-//            "weight" => 2.5,
-//            "quantity" => 4,
-//            "width" => 30,
-//            "height" => 30,
-//            "depth" => 50,
-//            "sku" => 234234234234,
+            'priceNet' => round(
+                $this->resource['price'] - ($this->resource['price'] * $this->resource['vat_rate']),
+            ),
+            'vat' => $this->resource['vat_rate'],
+            'weight' => null,
+            'quantity' => null,
+            'width' => null,
+            'height' => null,
+            'depth' => null,
+            'sku' => null,
             'imageUrl' => $this->resource['product']['cover']['url'],
         ];
     }
