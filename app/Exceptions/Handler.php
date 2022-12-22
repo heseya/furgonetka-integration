@@ -55,17 +55,9 @@ class Handler extends ExceptionHandler
         ApiAuthorizationException::class => [
             'code' => Response::HTTP_FORBIDDEN,
         ],
-        UnknownApiException::class => [
-            'code' => Response::HTTP_NOT_FOUND,
-        ],
         InvalidTokenException::class => [
+            'message' => 'Auth token is invalid',
             'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
-        ],
-        SettingNotFoundException::class => [
-            'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
-        ],
-        ProductsNotFoundException::class => [
-            'code' => Response::HTTP_NOT_FOUND,
         ],
     ];
 

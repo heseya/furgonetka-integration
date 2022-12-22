@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Exceptions\InvalidTokenException;
 use App\Models\Api;
 use App\Services\Contracts\ApiServiceContract;
 use App\Services\Contracts\OrdersServiceContract;
@@ -22,10 +23,6 @@ readonly final class OrdersService implements OrdersServiceContract
     {
         $orders = Collection::make();
         $api = $this->getApiByToken($token);
-
-        if (null === $api) {
-            return $orders;
-        }
 
         // orders sort by created_at (the oldest first)
         $response = $this->apiService->send($api, 'GET', '/orders', [
@@ -46,11 +43,6 @@ readonly final class OrdersService implements OrdersServiceContract
     public function saveTracking(?string $token, string $orderId, string $number): void
     {
         $api = $this->getApiByToken($token);
-
-        if (null === $api) {
-            return;
-        }
-
         $this->apiService->send($api, 'PATCH', "/orders/id:$orderId", [
             'shipping_number' => $number,
         ]);
@@ -63,10 +55,16 @@ readonly final class OrdersService implements OrdersServiceContract
         return $response->json('data');
     }
 
-    private function getApiByToken(?string $token): ?Api
+    private function getApiByToken(?string $token): Api
     {
-        return Api::query()
+        $api = Api::query()
             ->where('furgonetka_token', $token)
-            ->firstOrFail();
+            ->first();
+
+        if (!($api instanceof Api)) {
+            throw new InvalidTokenException();
+        }
+
+        return $api;
     }
 }
