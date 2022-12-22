@@ -15,7 +15,8 @@ final class ProductResource extends JsonResource
             'name' => '' !== $this->resource['name'] ? $this->resource['name'] : $this->resource['product']['name'],
             'priceGross' => $this->resource['price'],
             'priceNet' => round(
-                $this->resource['price'] - ($this->resource['price'] * $this->resource['vat_rate']),
+                $this->resource['price'] - ($this->resource['price'] * $this->resource['vat_rate'] / 100),
+                2,
             ),
             'vat' => $this->resource['vat_rate'],
             'weight' => 0.2,
