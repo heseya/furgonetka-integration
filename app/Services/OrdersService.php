@@ -47,7 +47,7 @@ readonly final class OrdersService implements OrdersServiceContract
     {
         $api = $this->getApiByToken($token);
 
-        if ($api === null) {
+        if (null === $api) {
             return;
         }
 
