@@ -18,12 +18,12 @@ final class ProductResource extends JsonResource
                 $this->resource['price'] - ($this->resource['price'] * $this->resource['vat_rate']),
             ),
             'vat' => $this->resource['vat_rate'],
-            'weight' => null,
-            'quantity' => null,
-            'width' => null,
-            'height' => null,
-            'depth' => null,
-            'sku' => null,
+            'weight' => 0.2,
+            'quantity' => $this->resource['quantity'],
+            'width' => 5,
+            'height' => 6,
+            'depth' => 2,
+            'sku' => 0,
             'imageUrl' => $this->resource['product']['cover']['url'],
         ];
     }

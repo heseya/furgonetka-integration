@@ -7,7 +7,9 @@ namespace App\Services;
 use App\Models\Api;
 use App\Services\Contracts\ApiServiceContract;
 use App\Services\Contracts\OrdersServiceContract;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 readonly final class OrdersService implements OrdersServiceContract
 {
@@ -29,16 +31,13 @@ readonly final class OrdersService implements OrdersServiceContract
             ->where('furgonetka_token', $token)
             ->firstOrFail();
 
-        $data = [];
-        if (null !== $dateTime) {
-            $data['from'] = $dateTime;
-        }
-
         // orders sort by created_at (the oldest first)
         $response = $this->apiService->send($api, 'GET', '/orders', [
-            ...$data,
             'sort' => 'created_at',
             'limit' => $limit,
+            'from' => null !== $dateTime ?
+                Str::of($dateTime)->beforeLast(' ') :
+                Carbon::today()->subDays(100)->startOfDay()->toString(),
         ]);
 
         foreach ($response->json('data') as $order) {

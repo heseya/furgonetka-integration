@@ -12,7 +12,7 @@ class OrdersExportRequest extends Request
     {
         return [
             'datetime' => ['nullable'],
-            'limit' => ['nullable', 'number'],
+            'limit' => ['nullable', 'number', 'min:1', 'max:500'],
         ];
     }
 }
