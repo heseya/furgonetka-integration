@@ -9,4 +9,6 @@ use Illuminate\Support\Collection;
 interface OrdersServiceContract
 {
     public function getOrders(string $token, string $dateTime, int $limit): Collection;
+
+    public function saveTracking(?string $token, string $orderId, string $number): void;
 }

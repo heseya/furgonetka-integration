@@ -19,6 +19,4 @@ Route::post('/config', [ConfigController::class, 'show'])
     ->middleware('can:configure');
 
 Route::get('/orders', [OrdersController::class, 'show']);
-
-// TODO
-// Route::post('/orders/{id}/tracking_number', [OrdersController::class, 'show']);
+Route::post('/orders/{id}/tracking_number', [OrdersController::class, 'store']);

@@ -8,24 +8,27 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 final class OrderResource extends JsonResource
 {
+    public static $wrap = null;
+
     public function toArray($request): array
     {
         return [
-            'sourceOrderId' => $this->resource['code'],
+            'sourceOrderId' => $this->resource['id'],
+            'sourceClientId' => $this->resource['code'],
             'datetimeOrder' => $this->resource['created_at'],
             'sourceDatetimeChange' => $this->resource['created_at'],
-            'service' => 'inpostkurier',
+            'service' => null,
             'serviceDescription' => $this->resource['shipping_method']['name'],
             'status' => $this->resource['status']['name'],
             'totalPrice' => $this->resource['summary'],
             'shippingCost' => $this->resource['shipping_price'],
             'totalPaid' => $this->resource['summary_paid'],
             'codAmount' => 0,
-            'totalWeight' => 0.5,
-            'point' => '',
-            'comment' => $this->resource['comment'] ?? '',
+            'totalWeight' => null,
+            'point' => null,
+            'comment' => $this->resource['comment'],
             'shippingAddress' => [
-                'company' => '',
+                'company' => null,
                 'name' => $this->resource['delivery_address']['name'],
                 'street' => $this->resource['delivery_address']['address'],
                 'city' => $this->resource['delivery_address']['city'],
