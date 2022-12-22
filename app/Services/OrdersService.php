@@ -37,7 +37,7 @@ readonly final class OrdersService implements OrdersServiceContract
             'limit' => $limit,
             'from' => null !== $dateTime ?
                 Str::of($dateTime)->beforeLast(' ') :
-                Carbon::today()->subDays(100)->startOfDay()->toString(),
+                Carbon::today()->subDays(100)->startOfDay()->toDateString(),
         ]);
 
         foreach ($response->json('data') as $order) {
