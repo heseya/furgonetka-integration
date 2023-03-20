@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 
 final class ProductResource extends JsonResource
 {
     public function toArray($request): array
     {
         return [
-            'sourceProductId' => $this->resource['product']['id'],
+            'sourceProductId' => Arr::get($this->resource, 'product.id'),
             'name' => '' !== $this->resource['name'] ? $this->resource['name'] : $this->resource['product']['name'],
             'priceGross' => $this->resource['price'],
             'priceNet' => round(
@@ -25,7 +26,7 @@ final class ProductResource extends JsonResource
             'height' => null,
             'depth' => null,
             'sku' => null,
-            'imageUrl' => $this->resource['product']['cover']['url'],
+            'imageUrl' => Arr::get($this->resource, 'product.cover.url'),
         ];
     }
 }

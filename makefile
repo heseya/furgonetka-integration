@@ -1,8 +1,8 @@
 up:
-	- docker-compose up -d
+	- ./vendor/bin/sail up -d
 
 down:
-	- docker-compose down
+	- ./vendor/bin/sail down
 
 bash:
-	- docker exec -it furgonetka-app-1 bash
+	- ./vendor/bin/sail bash
